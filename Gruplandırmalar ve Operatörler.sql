@@ -1,92 +1,147 @@
-Select count(*) from TBLOGRENCÝLER -- ÖÐRENCÝLER TABLOSUNU ÝÇÝNDEKÝ ÖÐRENCÝLERÝ sayýyor
-Select count(*) as 'Toplam Kayýt Sayýsý' from TBLOGRENCÝLER
+-- TBLOGRENCÝLER tablosundaki toplam öðrenci sayýsýný hesaplar.
+SELECT COUNT(*) FROM TBLOGRENCÝLER
 
-select count(*) as 'Toplam Kiþi' from TBLOGRENCÝLER where OGRSEHÝR='Adana' --adanadaki toplam kiþi sayýsýný 
+-- TBLOGRENCÝLER tablosundaki toplam öðrenci sayýsýný 'Toplam Kayýt Sayýsý' olarak gösterir.
+SELECT COUNT(*) AS 'Toplam Kayýt Sayýsý' FROM TBLOGRENCÝLER
 
-select sum(Sýnav1) as 'Toplam' from TBLNOTLAR 
+-- TBLOGRENCÝLER tablosunda OGRSEHÝR= 'Adana' olan öðrenci sayýsýný hesaplar.
+SELECT COUNT(*) AS 'Toplam Kiþi' FROM TBLOGRENCÝLER WHERE OGRSEHÝR = 'Adana'
 
-select sum(Sýnav1),sum(SINAV2),SUM(SINAV3) as 'Toplam' from TBLNOTLAR 
+-- TBLNOTLAR tablosundaki SINAV1 deðerlerinin toplamýný hesaplar.
+SELECT SUM(SINAV1) AS 'Toplam' FROM TBLNOTLAR
 
-select AVG(SINAV1) FROM TBLNOTLAR
+-- TBLNOTLAR tablosundaki SINAV1, SINAV2 ve SINAV3 deðerlerinin toplamýný hesaplar ve 'Toplam' olarak gösterir.
+SELECT SUM(SINAV1), SUM(SINAV2), SUM(SINAV3) AS 'Toplam' FROM TBLNOTLAR
 
-select AVG(SINAV1),AVG(SINAV2),AVG(SINAV3) FROM TBLNOTLAR -- sýnavlarýn ortalamalaýrný bulyor
+-- TBLNOTLAR tablosundaki SINAV1 deðerlerinin ortalamasýný hesaplar.
+SELECT AVG(SINAV1) FROM TBLNOTLAR
 
-select max(SINAV1) from TBLNOTLAR -- en yükseðini buluyor 
+-- TBLNOTLAR tablosundaki SINAV1, SINAV2 ve SINAV3 deðerlerinin ortalamalarýný hesaplar.
+SELECT AVG(SINAV1), AVG(SINAV2), AVG(SINAV3) FROM TBLNOTLAR
 
-select max(SINAV1),max(SINAV2),max(SINAV3) from TBLNOTLAR -- en yüksekleri buluyor 
+-- TBLNOTLAR tablosundaki SINAV1 deðerlerinin en yüksek deðerini bulur.
+SELECT MAX(SINAV1) FROM TBLNOTLAR
+
+-- TBLNOTLAR tablosundaki SINAV1, SINAV2 ve SINAV3 deðerlerinin en yükseklerini bulur.
+SELECT MAX(SINAV1), MAX(SINAV2), MAX(SINAV3) FROM TBLNOTLAR
+
 ------------------
-select sum(Sýnav1),sum(SINAV2),SUM(SINAV3) from TBLNOTLAR 
-select AVG(SINAV1),AVG(SINAV2),AVG(SINAV3) FROM TBLNOTLAR 
-select max(SINAV1),max(SINAV2),max(SINAV3) from TBLNOTLAR 
-select min(SINAV1),min(SINAV2),min(SINAV3) from TBLNOTLAR 
+
+-- TBLNOTLAR tablosundaki SINAV1, SINAV2 ve SINAV3 deðerlerinin toplamlarýný hesaplar.
+SELECT SUM(SINAV1), SUM(SINAV2), SUM(SINAV3) FROM TBLNOTLAR
+
+-- TBLNOTLAR tablosundaki SINAV1, SINAV2 ve SINAV3 deðerlerinin ortalamalarýný hesaplar.
+SELECT AVG(SINAV1), AVG(SINAV2), AVG(SINAV3) FROM TBLNOTLAR
+
+-- TBLNOTLAR tablosundaki SINAV1, SINAV2 ve SINAV3 deðerlerinin en yükseklerini bulur.
+SELECT MAX(SINAV1), MAX(SINAV2), MAX(SINAV3) FROM TBLNOTLAR
+
+-- TBLNOTLAR tablosundaki SINAV1, SINAV2 ve SINAV3 deðerlerinin en düþüklerini bulur.
+SELECT MIN(SINAV1), MIN(SINAV2), MIN(SINAV3) FROM TBLNOTLAR
 
 -------------------------------------------------
-select OGRSEHÝR,count(*) from TBLOGRENCÝLER Group BY OGRSEHÝR -- bunu adanadaki kiþileri saydýk
-select OGRCÝNSÝYET,count(*) from TBLOGRENCÝLER Group BY OGRCÝNSÝYET -- kaçtane öðrenci ve kaçtane erkek onlarý bulmana yardýmcý oldu
 
-update TBLOGRENCÝLER set OGRCÝNSÝYET='Erkek' where OGRCÝNSÝYET IS NULL -- burda null olanlarý erkek yaptýk
+-- TBLOGRENCÝLER tablosunda OGRSEHÝR sütununa göre gruplandýrýr ve her þehirdeki öðrenci sayýsýný gösterir.
+SELECT OGRSEHÝR, COUNT(*) FROM TBLOGRENCÝLER GROUP BY OGRSEHÝR
 
-select OGRENCÝ,COUNT(*) AS 'geçen öðrenciler sayýsý' from TBLNOTLAR where DURUM=1 Group BY OGRENCÝ
+-- TBLOGRENCÝLER tablosunda OGRCÝNSÝYET sütununa göre gruplandýrýr ve her cinsiyetteki öðrenci sayýsýný gösterir.
+SELECT OGRCÝNSÝYET, COUNT(*) FROM TBLOGRENCÝLER GROUP BY OGRCÝNSÝYET
 
-select OGRKULUP,count(*) as 'kulup kiþi sayýlarý'from TBLOGRENCÝLER  group by OGRKULUP 
-select OGRKULUP,count(*) from TBLOGRENCÝLER where OGRAD='Ali' group by OGRKULUP 
+-- TBLOGRENCÝLER tablosundaki OGRCÝNSÝYET sütununda NULL olan kayýtlarý 'Erkek' olarak günceller.
+UPDATE TBLOGRENCÝLER SET OGRCÝNSÝYET = 'Erkek' WHERE OGRCÝNSÝYET IS NULL
 
-select OGRSEHÝR,count(*) As 'Sayý' from TBLOGRENCÝLER group by OGRSEHÝR having count(*)=2
+-- TBLNOTLAR tablosunda DURUM=1 olan kayýtlarý gruplandýrýr ve her öðrenci için geçen öðrenci sayýsýný gösterir.
+SELECT OGRENCÝ, COUNT(*) AS 'Geçen Öðrenciler Sayýsý' FROM TBLNOTLAR WHERE DURUM = 1 GROUP BY OGRENCÝ
 
-select OGRKULUP,count(*) As 'Sayý' from TBLOGRENCÝLER group by OGRKULUP having OGRKULUP='Kitaplýk' -- havin ile grubun içinde seçiyorsun aslýnda
+-- TBLOGRENCÝLER tablosunda OGRKULUP sütununa göre gruplandýrýr ve her kulüpteki öðrenci sayýsýný gösterir.
+SELECT OGRKULUP, COUNT(*) AS 'Kulüp Kiþi Sayýlarý' FROM TBLOGRENCÝLER GROUP BY OGRKULUP
 
-SELECT DURUM, COUNT (*) AS 'KALANLAR 'FROM TBLNOTLAR GROUP BY DURUM HAVING DURUM=0
+-- TBLOGRENCÝLER tablosunda OGRAD='Ali' olan kayýtlarý OGRKULUP sütununa göre gruplandýrýr ve her gruptaki öðrenci sayýsýný gösterir.
+SELECT OGRKULUP, COUNT(*) FROM TBLOGRENCÝLER WHERE OGRAD = 'Ali' GROUP BY OGRKULUP
 
-SELECT DURUM, COUNT(*) AS 'GEÇENLER' FROM TBLNOTLAR GROUP BY DURUM HAVING DURUM=1
+-- TBLOGRENCÝLER tablosunda OGRSEHÝR sütununa göre gruplandýrýr ve yalnýzca öðrenci sayýsý 2 olan þehirleri gösterir.
+SELECT OGRSEHÝR, COUNT(*) AS 'Sayý' FROM TBLOGRENCÝLER GROUP BY OGRSEHÝR HAVING COUNT(*) = 2
 
-select * from TBLOGRENCÝLER where OGRAD like '%a%' or OGRSOYAD like '%a%'
+-- TBLOGRENCÝLER tablosunda OGRKULUP sütununa göre gruplandýrýr ve OGRKULUP='Kitaplýk' olan gruptaki öðrenci sayýsýný gösterir.
+SELECT OGRKULUP, COUNT(*) AS 'Sayý' FROM TBLOGRENCÝLER GROUP BY OGRKULUP HAVING OGRKULUP = 'Kitaplýk'
 
-select * from TBLOGRENCÝLER where OGRAD like 'a%' and OGRCÝNSÝYET='erkek'
+-- TBLNOTLAR tablosunda DURUM sütununa göre gruplandýrýr ve DURUM=0 olan öðrencilerin sayýsýný gösterir.
+SELECT DURUM, COUNT(*) AS 'Kalanlar' FROM TBLNOTLAR GROUP BY DURUM HAVING DURUM = 0
 
-select * from TBLOGRENCÝLER where OGRAD like 'a%' and OGRCÝNSÝYET='Kýz'
+-- TBLNOTLAR tablosunda DURUM sütununa göre gruplandýrýr ve DURUM=1 olan öðrencilerin sayýsýný gösterir.
+SELECT DURUM, COUNT(*) AS 'Geçenler' FROM TBLNOTLAR GROUP BY DURUM HAVING DURUM = 1
 
-select * from  TBLOGRENCÝLER where OGRSEHÝR like '%ir%'
+-- TBLOGRENCÝLER tablosunda OGRAD veya OGRSOYAD sütununda 'a' harfi geçen kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRAD LIKE '%a%' OR OGRSOYAD LIKE '%a%'
 
-select OGRSEHÝR from TBLOGRENCÝLER
+-- TBLOGRENCÝLER tablosunda OGRAD sütununda 'a' harfi ile baþlayan ve OGRCÝNSÝYET='erkek' olan kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRAD LIKE 'a%' AND OGRCÝNSÝYET = 'erkek'
 
-select DISTINCT OGRSEHÝR from TBLOGRENCÝLER
+-- TBLOGRENCÝLER tablosunda OGRAD sütununda 'a' harfi ile baþlayan ve OGRCÝNSÝYET='Kýz' olan kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRAD LIKE 'a%' AND OGRCÝNSÝYET = 'Kýz'
 
-SELECT Count(OGRSEHÝR) from TBLOGRENCÝLER
+-- TBLOGRENCÝLER tablosunda OGRSEHÝR sütununda 'ir' harflerini içeren kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRSEHÝR LIKE '%ir%'
 
-SELECT Count(DISTINCT(OGRSEHÝR)) as'külüp sayýsý' from TBLOGRENCÝLER
+-- TBLOGRENCÝLER tablosundaki tüm OGRSEHÝR deðerlerini gösterir.
+SELECT OGRSEHÝR FROM TBLOGRENCÝLER
 
-select * from TBLOGRENCÝLER order by OGRAD desc
+-- TBLOGRENCÝLER tablosundaki benzersiz (tekrar etmeyen) OGRSEHÝR deðerlerini gösterir.
+SELECT DISTINCT OGRSEHÝR FROM TBLOGRENCÝLER
 
-select * from TBLOGRENCÝLER order by OGRCÝNSÝYET desc
+-- TBLOGRENCÝLER tablosundaki OGRSEHÝR deðerlerinin toplam sayýsýný hesaplar.
+SELECT COUNT(OGRSEHÝR) FROM TBLOGRENCÝLER
 
-select distinct(OGRSEHÝR) from TBLOGRENCÝLER order by OGRSEHÝR desc
+-- TBLOGRENCÝLER tablosundaki benzersiz OGRSEHÝR deðerlerinin sayýsýný hesaplar ve 'kulüp sayýsý' olarak gösterir.
+SELECT COUNT(DISTINCT OGRSEHÝR) AS 'Kulüp Sayýsý' FROM TBLOGRENCÝLER
 
-select top 20 percent * from TBLOGRENCÝLER
+-- TBLOGRENCÝLER tablosundaki tüm kayýtlarý OGRAD sütununa göre azalan sýralamada gösterir.
+SELECT * FROM TBLOGRENCÝLER ORDER BY OGRAD DESC
 
-SELECT * FROM TBLOGRENCÝLER where OGRSEHÝR like '%an_%'
+-- TBLOGRENCÝLER tablosundaki tüm kayýtlarý OGRCÝNSÝYET sütununa göre azalan sýralamada gösterir.
+SELECT * FROM TBLOGRENCÝLER ORDER BY OGRCÝNSÝYET DESC
 
-SELECT * FROM TBLOGRENCÝLER where OGRAD like '%[A,B]%'
+-- TBLOGRENCÝLER tablosundaki benzersiz OGRSEHÝR deðerlerini OGRSEHÝR sütununa göre azalan sýralamada gösterir.
+SELECT DISTINCT OGRSEHÝR FROM TBLOGRENCÝLER ORDER BY OGRSEHÝR DESC
 
-SELECT * FROM TBLOGRENCÝLER where OGRAD like '%[A,B]'
+-- TBLOGRENCÝLER tablosundaki ilk %20 kayýtlarý seçer.
+SELECT TOP 20 PERCENT * FROM TBLOGRENCÝLER
 
-SELECT top 4 * from TBLOGRENCÝLER
+-- TBLOGRENCÝLER tablosundaki OGRSEHÝR sütununda 'an_' þeklinde biten kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRSEHÝR LIKE '%an_%'
 
-SELECT top 4 * from TBLOGRENCÝLER order by OGRID desc
+-- TBLOGRENCÝLER tablosundaki OGRAD sütununda 'A' veya 'B' harflerini içeren kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRAD LIKE '%[A,B]%'
 
-SELECT top 41 percent * from TBLOGRENCÝLER
+-- TBLOGRENCÝLER tablosundaki OGRAD sütununda yalnýzca 'A' veya 'B' harflerinin geçtiði kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRAD LIKE '%[A,B]'
 
-select * from TBLOGRENCÝLER where OGRSEHÝR='Ýzmir' or OGRSEHÝR='Ankara' or OGRSEHÝR='Adana'
+-- TBLOGRENCÝLER tablosundaki ilk 4 kayýtlarý seçer.
+SELECT TOP 4 * FROM TBLOGRENCÝLER
 
-select * from TBLOGRENCÝLER where OGRSEHÝR in('Ýzmir','Ankara','Adana')
+-- TBLOGRENCÝLER tablosundaki ilk 4 kayýtlarý OGRID sütununa göre azalan sýralamada seçer.
+SELECT TOP 4 * FROM TBLOGRENCÝLER ORDER BY OGRID DESC
 
-select * from TBLNOTLAR where SINAV1 in (70,75,85,90)
+-- TBLOGRENCÝLER tablosundaki ilk %41 kayýtlarý seçer.
+SELECT TOP 41 PERCENT * FROM TBLOGRENCÝLER
 
-select * from TBLNOTLAR where SINAV1 not in (70,75,85,90)
+-- TBLOGRENCÝLER tablosunda OGRSEHÝR='Ýzmir', OGRSEHÝR='Ankara' veya OGRSEHÝR='Adana' olan kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRSEHÝR = 'Ýzmir' OR OGRSEHÝR = 'Ankara' OR OGRSEHÝR = 'Adana'
 
-select * from TBLNOTLAR where ORTALAMA between 74 and 100 
+-- TBLOGRENCÝLER tablosunda OGRSEHÝR sütununda 'Ýzmir', 'Ankara' veya 'Adana' deðerlerini içeren kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRSEHÝR IN ('Ýzmir', 'Ankara', 'Adana')
 
-select * from TBLNOTLAR where ORTALAMA between 74 and 100 
+-- TBLNOTLAR tablosunda SINAV1 deðerleri 70, 75, 85 veya 90 olan kayýtlarý gösterir.
+SELECT * FROM TBLNOTLAR WHERE SINAV1 IN (70, 75, 85, 90)
 
-select * from TBLOGRENCÝLER where OGRAD between 'A' and 'N' -- sondaki dahil deðil 
+-- TBLNOTLAR tablosunda SINAV1 deðerleri 70, 75, 85 veya 90 olmayan kayýtlarý gösterir.
+SELECT * FROM TBLNOTLAR WHERE SINAV1 NOT IN (70, 75, 85, 90)
 
-select * from TBLOGRENCÝLER where OGRAD not between 'A' and 'N' -- sondaki dahil deðil 
+-- TBLNOTLAR tablosunda ORTALAMA deðeri 74 ile 100 arasýnda olan kayýtlarý gösterir.
+SELECT * FROM TBLNOTLAR WHERE ORTALAMA BETWEEN 74 AND 100
+
+-- TBLOGRENCÝLER tablosunda OGRAD deðeri 'A' ile 'N' arasýnda (sondaki dahil deðil) olan kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRAD BETWEEN 'A' AND 'N'
+
+-- TBLOGRENCÝLER tablosunda OGRAD deðeri 'A' ile 'N' arasýnda (sondaki dahil deðil) olmayan kayýtlarý gösterir.
+SELECT * FROM TBLOGRENCÝLER WHERE OGRAD NOT BETWEEN 'A' AND 'N'
